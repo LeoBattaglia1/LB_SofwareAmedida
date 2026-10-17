@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>LB Software a Medida - Feliz Día Mamá</title>
+
+    <link rel="preload" as="image" href="L.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@1,600&display=swap");
+
+      body {
+        font-family: "Montserrat", sans-serif;
+        background-color: #050505;
+        color: #ffffff;
+        overflow-x: hidden;
+        touch-action: manipulation;
+      }
+
+      .font-code {
+        font-family: "Fira Code", monospace;
+      }
+
+      .font-serif-title {
+        font-family: "Playfair Display", serif;
+      }
+
+      .glow-bg {
+        transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .glow-active {
+        background: radial-gradient(
+          circle at center,
+          rgba(236, 72, 153, 0.25) 0%,
+          rgba(5, 5, 5, 1) 75%
+        );
+      }
+
+      .slider-track {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(8px);
+      }
+
+      .heart-btn {
+        touch-action: none;
+        box-shadow: 0 0 18px rgba(244, 63, 94, 0.7);
+        transition:
+          transform 0.1s ease,
+          box-shadow 0.2s ease;
+      }
+
+      .fade-in-up {
+        animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Transición suave para revelar el logo */
+      #logo-fill {
+        clip-path: inset(0 100% 0 0);
+        transition: clip-path 0.05s linear;
+      }
+
+      .custom-scroll::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scroll::-webkit-scrollbar-track {
+        background: #0d0d0d;
+      }
+      .custom-scroll::-webkit-scrollbar-thumb {
+        background: #2b2b2b;
+        border-radius: 3px;
+      }
+    </style>
+  </head>
+  <body
+    class="min-h-screen w-screen flex flex-col justify-between relative select-none glow-bg"
+    id="bg-container"
+  >
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div
+      class="flex-1 w-full grid grid-cols-1 lg:grid-cols-12 min-h-[calc(100vh-50px)] pb-4"
+    >
+      <!-- COLUMNA / SECCIÓN DE CÓDIGO (Arriba en móvil, izquierda en PC) -->
+      <section
+        class="lg:col-span-5 border-b lg:border-b-0 lg:border-r border-neutral-800/80 bg-neutral-950/80 p-4 lg:p-6 flex flex-col justify-center"
+      >
+        <div
+          class="w-full max-w-lg mx-auto bg-neutral-900/90 border border-neutral-800 rounded-xl overflow-hidden shadow-2xl"
+        >
+          <!-- Cabecera Editor -->
+          <div
+            class="bg-neutral-950 px-4 py-2 border-b border-neutral-800 flex items-center justify-between"
+          >
+            <div class="flex items-center gap-1.5">
+              <div class="w-3 h-3 rounded-full bg-rose-500/80"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+              <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+            </div>
+            <span class="text-[11px] font-code text-neutral-400"
+              >FelizDiaMama.js</span
+            >
+            <span class="text-[10px] font-code text-neutral-600"
+              >iOS Ready</span
+            >
+          </div>
+
+          <!-- Código Scrolleable -->
+          <div
+            class="p-3.5 font-code text-[11px] lg:text-[12px] leading-relaxed text-neutral-300 overflow-y-auto custom-scroll max-h-[200px] lg:max-h-[380px]"
+          >
+            <pre><code><span class="text-purple-400">import</span> { <span class="text-yellow-300">LBSoftware</span> } <span class="text-purple-400">from</span> <span class="text-green-400">'@lb/software'</span>;
+
+<span class="text-neutral-500">// Carga del Logo mediante Slider</span>
+<span class="text-purple-400">function</span> <span class="text-blue-400">desearFelizDia</span>() {
+  <span class="text-purple-400">const</span> heart <span class="text-purple-400">=</span> <span class="text-yellow-300">document</span>.<span class="text-blue-300">querySelector</span>(<span class="text-green-400">'#corazon'</span>);
+
+  heart.<span class="text-blue-300">onSlideProgress</span>((porcentaje) =&gt; {
+    <span class="text-yellow-300">LBSoftware</span>.<span class="text-blue-300">cargarLogo</span>(porcentaje);
+  });
+
+  heart.<span class="text-blue-300">onSlideComplete</span>(() =&gt; {
+    <span class="text-yellow-300">LBSoftware</span>.<span class="text-blue-300">completarCarga</span>();
+    
+    <span class="text-yellow-300">setTimeout</span>(() =&gt; {
+      <span class="text-yellow-300">LBSoftware</span>.<span class="text-blue-300">iluminarPantalla</span>();
+      <span class="text-yellow-300">LBSoftware</span>.<span class="text-blue-300">lanzarConfeti</span>();
+      <span class="text-yellow-300">LBSoftware</span>.<span class="text-blue-300">mostrarMensaje</span>(<span class="text-green-400">"¡Feliz Día MAMÁ!"</span>);
+    }, <span class="text-orange-400">2000</span>);
+  });
+}
+
+<span class="text-blue-400">desearFelizDia</span>();</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- COLUMNA / SECCIÓN INTERACTIVA (Abajo en móvil, derecha en PC) -->
+      <section
+        class="lg:col-span-7 flex flex-col items-center justify-center p-6 relative min-h-[360px]"
+      >
+        <!-- FASE 1: LOGO QUE SE CARGA COMO BARRA Y SLIDER -->
+        <div
+          id="slider-stage"
+          class="w-full max-w-sm flex flex-col items-center gap-6 text-center transition-all duration-700"
+        >
+          <!-- CONTENEDOR DEL LOGO "PROGRESS BAR" -->
+          <div
+            class="relative p-3 rounded-2xl bg-neutral-900/60 border border-neutral-800 backdrop-blur-md shadow-2xl flex items-center justify-center overflow-hidden"
+          >
+            <!-- Capa Fondo / Desactivado (Fondo tenue) -->
+            <img
+              src="L.png"
+              alt="LB Logo Base"
+              fetchpriority="high"
+              loading="eager"
+              class="w-36 lg:w-44 h-auto object-contain opacity-20 filter grayscale"
+            />
+
+            <!-- Capa Frente / Se devela con el Slider -->
+            <img
+              id="logo-fill"
+              src="L.png"
+              alt="LB Logo Revelado"
+              fetchpriority="high"
+              loading="eager"
+              class="w-36 lg:w-44 h-auto object-contain absolute inset-x-0 mx-auto drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]"
+            />
+          </div>
+
+          <div class="space-y-1">
+            <h2
+              id="status-title"
+              class="text-base lg:text-lg font-light text-neutral-200 transition-colors"
+            >
+              Desliza para cargar
+            </h2>
+            <p class="text-xs text-neutral-500 font-code">
+              &lt;/ arrastra el corazón &gt;
+            </p>
+          </div>
+
+          <!-- Pista del slider -->
+          <div
+            id="track"
+            class="slider-track w-full h-16 rounded-full relative p-2 flex items-center overflow-hidden"
+          >
+            <div
+              id="track-text"
+              class="absolute inset-0 flex items-center justify-center text-xs tracking-[0.2em] text-neutral-400 uppercase pointer-events-none"
+            >
+              Deslizar &rarr;
+            </div>
+            <div
+              id="heart-handle"
+              class="heart-btn w-12 h-12 rounded-full bg-gradient-to-r from-rose-500 to-pink-600 flex items-center justify-center cursor-grab active:cursor-grabbing z-20"
+            >
+              <svg class="w-6 h-6 text-white fill-current" viewBox="0 0 24 24">
+                <path
+                  d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- FASE 2: REVELACIÓN DEL SALUDO A MAMA (APARECE LUEGO DE 2 SEGUNDOS) -->
+        <div
+          id="reveal-stage"
+          class="w-full max-w-sm flex flex-col items-center justify-center gap-6 text-center hidden"
+        >
+          <div class="space-y-2 fade-in-up">
+            <span
+              class="text-rose-400 text-xs tracking-[0.3em] uppercase font-semibold"
+              >Un saludo especial</span
+            >
+            <h1
+              class="text-4xl md:text-5xl font-serif-title text-white font-bold tracking-tight"
+            >
+              ¡Feliz Día
+              <span
+                class="bg-gradient-to-r from-rose-400 via-pink-300 to-purple-400 bg-clip-text text-transparent"
+                >MAMÁ</span
+              >!
+            </h1>
+          </div>
+
+          <!-- Botón reiniciar -->
+          <button
+            id="reset-btn"
+            class="mt-4 text-neutral-400 hover:text-neutral-200 text-xs font-code transition-colors fade-in-up border border-neutral-800 rounded-full px-5 py-2.5 bg-neutral-900/80 shadow-lg"
+            style="animation-delay: 0.3s"
+          >
+            &#x21bb; volver a deslizar
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <!-- PIE DE PÁGINA CON LOGO EN RINCÓN INFERIOR DERECHO -->
+    <footer
+      class="w-full py-2 px-6 border-t border-neutral-900 bg-neutral-950 flex items-center justify-between z-20"
+    >
+      <div class="text-[10px] lg:text-[11px] font-code text-neutral-500">
+        &lt;/ SOFWARE A MEDIDA &gt;
+      </div>
+
+      <!-- Logo pequeño permanente en el rincón -->
+      <div class="flex items-center gap-2">
+        <img
+          src="L.png"
+          alt="LB Logo"
+          fetchpriority="high"
+          loading="eager"
+          class="h-7 w-auto object-contain opacity-80"
+        />
+      </div>
+    </footer>
+
+    <script>
+      const handle = document.getElementById("heart-handle");
+      const track = document.getElementById("track");
+      const trackText = document.getElementById("track-text");
+      const logoFill = document.getElementById("logo-fill");
+      const statusTitle = document.getElementById("status-title");
+      const sliderStage = document.getElementById("slider-stage");
+      const revealStage = document.getElementById("reveal-stage");
+      const bgContainer = document.getElementById("bg-container");
+      const resetBtn = document.getElementById("reset-btn");
+
+      let isDragging = false;
+      let startX = 0;
+      let currentX = 0;
+      let maxDistance = 0;
+
+      function updateMaxDistance() {
+        maxDistance = track.clientWidth - handle.clientWidth - 16;
+      }
+
+      window.addEventListener("resize", updateMaxDistance);
+      updateMaxDistance();
+
+      handle.addEventListener("mousedown", startDrag);
+      handle.addEventListener("touchstart", startDrag, { passive: true });
+
+      window.addEventListener("mousemove", onDrag);
+      window.addEventListener("touchmove", onDrag, { passive: false });
+
+      window.addEventListener("mouseup", endDrag);
+      window.addEventListener("touchend", endDrag);
+
+      function startDrag(e) {
+        isDragging = true;
+        startX = e.type.includes("touch") ? e.touches[0].clientX : e.clientX;
+        handle.style.transition = "none";
+      }
+
+      function onDrag(e) {
+        if (!isDragging) return;
+        const clientX = e.type.includes("touch")
+          ? e.touches[0].clientX
+          : e.clientX;
+        const deltaX = clientX - startX;
+        currentX = Math.max(0, Math.min(deltaX, maxDistance));
+        handle.style.transform = `translateX(${currentX}px)`;
+
+        // Porcentaje de progreso de 0 a 100%
+        const progress = currentX / maxDistance;
+        trackText.style.opacity = 1 - progress;
+
+        // Actualizar el "llenado" del logo
+        const clipPercent = 100 - progress * 100;
+        logoFill.style.clipPath = `inset(0 ${clipPercent}% 0 0)`;
+
+        if (e.cancelable && e.type.includes("touch")) {
+          e.preventDefault();
+        }
+      }
+
+      function endDrag() {
+        if (!isDragging) return;
+        isDragging = false;
+
+        // Si llegó al 85% o más, lo consideramos completo
+        if (currentX >= maxDistance * 0.85) {
+          handle.style.transition = "transform 0.2s ease-out";
+          handle.style.transform = `translateX(${maxDistance}px)`;
+          logoFill.style.clipPath = `inset(0 0% 0 0)`;
+
+          triggerSuccessSequence();
+        } else {
+          // Si no completó, vuelve a 0
+          handle.style.transition = "transform 0.3s ease-out";
+          handle.style.transform = "translateX(0px)";
+          logoFill.style.transition = "clip-path 0.3s ease-out";
+          logoFill.style.clipPath = `inset(0 100% 0 0)`;
+          trackText.style.opacity = 1;
+          currentX = 0;
+
+          setTimeout(() => {
+            logoFill.style.transition = "clip-path 0.05s linear";
+          }, 300);
+        }
+      }
+
+      function triggerSuccessSequence() {
+        // Bloquear más arrastres
+        handle.style.pointerEvents = "none";
+        statusTitle.textContent = "¡Carga completa!";
+        statusTitle.classList.add("text-rose-400", "font-semibold");
+
+        // Esperar 2 segundos con el logo cargado al 100%
+        setTimeout(() => {
+          // Desvanecer la sección del slider y logo
+          sliderStage.style.opacity = "0";
+
+          setTimeout(() => {
+            sliderStage.classList.add("hidden");
+            revealStage.classList.remove("hidden");
+
+            // Encender iluminación neón de fondo
+            bgContainer.classList.add("glow-active");
+
+            // Disparar Confeti
+            if (typeof confetti === "function") {
+              confetti({
+                particleCount: 160,
+                spread: 85,
+                origin: { y: 0.6 },
+                colors: ["#f43f5e", "#ec4899", "#ffffff"],
+              });
+            }
+          }, 500);
+        }, 2000); // 2 segundos de espera
+      }
+
+      resetBtn.addEventListener("click", () => {
+        handle.style.pointerEvents = "auto";
+        sliderStage.style.opacity = "1";
+        revealStage.classList.add("hidden");
+        sliderStage.classList.remove("hidden");
+        bgContainer.classList.remove("glow-active");
+
+        statusTitle.textContent = "Desliza para cargar";
+        statusTitle.classList.remove("text-rose-400", "font-semibold");
+
+        handle.style.transition = "none";
+        handle.style.transform = "translateX(0px)";
+        logoFill.style.clipPath = `inset(0 100% 0 0)`;
+        trackText.style.opacity = 1;
+        currentX = 0;
+      });
+    </script>
+  </body>
+</html>
