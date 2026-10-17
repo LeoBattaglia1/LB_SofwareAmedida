@@ -33,7 +33,6 @@ abrirLogin.addEventListener("click", () => {
   if (transicionEnCurso || login.classList.contains("visible")) return;
   transicionEnCurso = true;
 
-  // La portada se disuelve; la puerta no gira ni se abre.
   escena.classList.add("deshaciendo");
   abrirLogin.disabled = true;
 
